@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dto.EmployeeRequestDto;
+import com.example.demo.dto.EmployeeResponseDto;
 import com.example.demo.entity.Employee;
-import com.example.demo.service.Employeeservice;
+import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +15,11 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private Employeeservice employeeservice;
+    private EmployeeService employeeservice;
 
     @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeservice.addEmployee(employee);
+    public EmployeeResponseDto addEmployee(@RequestBody EmployeeRequestDto requestDto) {
+        return employeeservice.addEmployee(requestDto);
     }
 
 
@@ -32,8 +34,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        return employeeservice.updateEmployee(id, employee);
+    public EmployeeResponseDto updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDto requestDto) {
+        return employeeservice.updateEmployee(id, requestDto);
     }
 
     @DeleteMapping("/{id}")
