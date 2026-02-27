@@ -1,8 +1,12 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.EmployeeRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -17,7 +21,13 @@ public class Employee {
 
     private String name;
     private String gender;
-    private String department;
+
+    @ManyToOne
+    @JoinColumn(name ="department_id")
+    @JsonIgnore
+    private Department department;
+
+
     private String position;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -26,4 +36,7 @@ public class Employee {
     private Double salary;
     private String phone;
     private String email;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Attendance> attendances;
 }
