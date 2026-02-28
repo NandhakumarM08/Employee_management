@@ -14,6 +14,7 @@ public class AttendanceResponseDto {
     private LocalDate date;
     private LocalTime checkIn;
     private LocalTime checkOut;
+    private Long WorkingHours;
 
 //    public Long getEmployeeId() {
 //    }

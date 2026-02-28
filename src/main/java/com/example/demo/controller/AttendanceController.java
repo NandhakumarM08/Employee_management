@@ -22,7 +22,7 @@ public class AttendanceController {
         return attendanceService.checkIn(dto);
     }
 
-//    @SneakyThrows
+
     @PutMapping("/checkout/{id}")
     public AttendanceResponseDto checkOut(@RequestBody AttendanceResponseDto dto) throws Throwable {
         return attendanceService.checkOut(dto);

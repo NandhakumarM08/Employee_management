@@ -37,6 +37,12 @@ public class Employee {
     private String phone;
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private String password;
+
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Attendance> attendances;
+
 }

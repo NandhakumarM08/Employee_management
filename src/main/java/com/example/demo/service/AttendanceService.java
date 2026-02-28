@@ -9,6 +9,7 @@ import com.example.demo.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -29,6 +30,11 @@ public class AttendanceService {
         Employee employee = employeeRepo.findById(dto.getEmployeeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
+        Attendance existing =attendanceRepo.findByEmployeeEmpIdAndDate(dto.getEmployeeId(),LocalDate.now());
+
+        if (existing!=null){
+            throw new RuntimeException("Already checkin");
+        }
         Attendance attendance = new Attendance();
         attendance.setEmployee(employee);
         attendance.setDate(LocalDate.now());
@@ -56,6 +62,16 @@ public class AttendanceService {
 
         attendance.setCheckOut(LocalTime.now());
 
+
+        long minutes = Duration.between(
+                attendance.getCheckIn(),
+                attendance.getCheckOut()
+        ).toMinutes();
+
+        attendance.setWorkingHours(minutes);
+
+
+
         Attendance saved = (Attendance) attendanceRepo.save(attendance);
 
         return mapToResponse(saved);
@@ -78,6 +94,9 @@ public class AttendanceService {
         dto.setDate(a.getDate());
         dto.setCheckIn(a.getCheckIn());
         dto.setCheckOut(a.getCheckOut());
+        dto.setWorkingHours(a.getWorkingHours());
+
+
         return dto;
 }
 }

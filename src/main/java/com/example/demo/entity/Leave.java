@@ -1,33 +1,33 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Attendance {
+@Table(name = "employee_leave")
+public class Leave {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    private LocalTime checkIn;
+    private String reason;
 
-    private LocalTime checkOut;
-
-    private Long workingHours;
+    @Enumerated(EnumType.STRING)
+    private LeaveStatus status;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
 }
